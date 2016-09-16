@@ -5,8 +5,8 @@ public class Intervalle {
     private int numMax, numMin, inf, sup;
 
     public Intervalle(int inf, int sup){
-        numMax = inf;
-        numMin = sup;
+        numMax = sup;
+        numMin = inf;
         this.inf = inf;
         this.sup = sup;
     }
