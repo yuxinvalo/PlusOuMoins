@@ -1,7 +1,9 @@
 /**
  * Created by tearsyu on 16-9-10.
+ * Cette classe est identique a la classe JoueurHumain, juste change la facon de
+ * generer le nombre. Ce joueur genere les nombres incrementals.
  */
-public class JoueurIncremental implements Joueur {
+public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     private String name;
     int coup = -1;
     public JoueurIncremental(String name){

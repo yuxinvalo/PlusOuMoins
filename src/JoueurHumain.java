@@ -2,23 +2,37 @@ import java.util.Random;
 
 /**
  * Created by tearsyu on 16-9-9.
+ * This class is a normal player who guess the number without logic.
+ * Cette classe herite JoueurAvecSecret qui se trouve dans exo10, implemente l'interface de Joueur
+ * dans l'exo 7.
  */
-public class JoueurHumain implements Joueur {
+public class JoueurHumain extends JoueurAvecSecret implements Joueur {
 
     private String name;
     int coup;
 
+    /*Chaque fois on cree un joueurHumain, on lui donne un nom.*/
     public JoueurHumain(String name){
         this.name = name;
-
     }
 
+    /**
+     * Methode getCoup() c'est pour generer un nombre aleatoir
+     * Ce nombre aleatoir est utilise pour 1.deviner 2.sauvegarder comme un nombre secret
+     * Faire attention: Je sauvegarde ce nombre "coup" dans la classe, et j'utilise la method returnCoup()
+     * se trouve en bas pour reprendre ce nombre.
+     * */
     public int getCoup(){
         Random random = new Random();
         coup = random.nextInt(100);
         return coup;
     }
 
+
+    /**
+     * Methode:setReponse() est juste utilise pour afficher les info sur terminal en fonction de 'int reponse'.
+     * Pour bien comprendre cette methode, je te conseille de modeliser le jeux avec la methode testSecret().
+     * */
     public void setReponse(int reponse){
         if (reponse == 0){
             System.out.println("You find it.");
@@ -29,6 +43,12 @@ public class JoueurHumain implements Joueur {
         }
     }
 
+    /**
+     * Methode: testSecret() est utilisee pour comparer le nombre deviner et le nombre secret.
+     * Deux joueurs, joueur1 genere un nombre  secret A dans 'coup', joueur2 genere un nombre B dans 'coup'
+     * joueur1 utilise B comme essai et fait la comparaison avec A qui est sauvegarde dans variable coup,
+     * joueur1 renvoie le resultat a methode setReponse() pour afficher les info.
+     * */
     public int testSecret(int essai){
         int reponse;
         if (essai == coup){
@@ -42,6 +62,10 @@ public class JoueurHumain implements Joueur {
     }
 
     ///================Generate auto==============================
+    /**
+     * Methode: getName() c'est une methode pour reprendre le nom de joueur qu'on definit quand on le cree.
+     * C'est pratique si vous voulez afficher le nom du joueur.
+     * */
     public String getName() {
         return name;
     }
@@ -51,8 +75,8 @@ public class JoueurHumain implements Joueur {
         return coup;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+   // public void setName(String name) {
+     //   this.name = name;
+    //}
 
 }

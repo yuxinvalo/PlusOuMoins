@@ -1,6 +1,7 @@
 /**
  * Created by tearsyu on 16-9-9.
- * Compiler with JoueurHumain.java!
+ * This class is a test to the other class.
+ * On va tester les joueurs sils ont bien jouer.
  */
 public class PlusOuMoins3 {
     public static void main(String[] args){
@@ -17,10 +18,19 @@ public class PlusOuMoins3 {
         player3 = new JoueurIncremental("TotoIcre");
         player4 = new JoueurDichotomique("TitiDichi", intervalle);
         arbitre = new Arbitre(intervalle, player2, player3);
+
+        //a is the number which need to be found.
         a = player1.getCoup();
         System.out.println("Player 1 "+ player1.getName() + " number is: " + a);
 
         System.out.println("Players  please entry a number to quess it.");
+
+        /**
+         * Ici j'utilise la boucle 'do{A;}while(B)' structure, parce que dans cette structure 'A'
+         * sera effectue au moins une fois n'importe B est vrai ou fault. L'avantage ici par rapport
+         * a la structure 'while(B){A;}' c'est que si B est fault, A sera jamais effectue, cest a dire
+         * A cest le processus du jeux, ca sera jamais effectue.
+         * */
         do {
             b = player2.getCoup();
             c = player3.getCoup();
