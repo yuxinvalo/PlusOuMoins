@@ -5,26 +5,35 @@ import java.util.Random;
  * This class is a normal player who guess the number without logic.
  * Cette classe herite JoueurAvecSecret qui se trouve dans exo10, implemente l'interface de Joueur
  * dans l'exo 7.
+ * Teste pour JoueurHuamin sera effectue dans la classe PlusOuMoins3.java.
  */
 public class JoueurHumain extends JoueurAvecSecret implements Joueur {
 
     private String name;
-    int coup;
+    int coup, nbkey;
 
     /*Chaque fois on cree un joueurHumain, on lui donne un nom.*/
     public JoueurHumain(String name){
         this.name = name;
     }
 
+    public void setNbkey(){
+        nbkey = getCoup();
+    }
+
+    public int getNbkey(){
+        return nbkey;
+    }
     /**
      * Methode getCoup() c'est pour generer un nombre aleatoir
      * Ce nombre aleatoir est utilise pour 1.deviner 2.sauvegarder comme un nombre secret
      * Faire attention: Je sauvegarde ce nombre "coup" dans la classe, et j'utilise la method returnCoup()
      * se trouve en bas pour reprendre ce nombre.
      * */
+
     public int getCoup(){
         Random random = new Random();
-        coup = random.nextInt(100);
+        coup = random.nextInt(10);
         return coup;
     }
 
@@ -34,11 +43,11 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
      * Pour bien comprendre cette methode, je te conseille de modeliser le jeux avec la methode testSecret().
      * */
     public void setReponse(int reponse){
-        if (reponse == 0){
+        if (reponse == Arbitre.Reponse.FOUND.flag){
             System.out.println("You find it.");
-        } else if (reponse == 1){
+        } else if (reponse == Arbitre.Reponse.BIGGER.flag){
             System.out.println("It should be bigger.");
-        } else if (reponse == 2){
+        } else if (reponse == Arbitre.Reponse.SMALLER.flag){
             System.out.println("It should be smaller.");
         }
     }
@@ -75,8 +84,7 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
         return coup;
     }
 
-   // public void setName(String name) {
-     //   this.name = name;
-    //}
-
+    public void showInfo() {
+        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
+    }
 }

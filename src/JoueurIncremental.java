@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.Scanner;
+
 /**
  * Created by tearsyu on 16-9-10.
  * Cette classe est identique a la classe JoueurHumain, juste change la facon de
@@ -5,9 +8,20 @@
  */
 public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     private String name;
-    int coup = -1;
+    int coup = -1, nbkey;
     public JoueurIncremental(String name){
         this.name = name;
+    }
+
+    public void setNbkey(){
+        //Scanner scanner = new Scanner(System.in);
+        //nbkey = scanner.nextInt();
+        Random random = new Random();
+        nbkey = random.nextInt(100);
+    }
+
+    public int getNbkey(){
+        return nbkey;
     }
 
     public int getCoup(){
@@ -19,11 +33,11 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
 
     @Override
     public void setReponse(int reponse) {
-        if (reponse == 0){
+        if (reponse == Arbitre.Reponse.FOUND.flag){
             System.out.println("You find it.");
-        } else if (reponse == 1){
+        } else if (reponse == Arbitre.Reponse.BIGGER.flag){
             System.out.println("It should be bigger.");
-        } else if (reponse == 2){
+        } else if (reponse == Arbitre.Reponse.SMALLER.flag){
             System.out.println("It should be smaller.");
         }
     }
@@ -31,9 +45,9 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     @Override
     public int testSecret(int essai) {
         int reponse;
-        if (essai == coup){
+        if (essai == nbkey){
             reponse = 0;
-        } else if(essai < coup) {
+        } else if(essai < nbkey) {
             reponse = 1;
         } else {
             reponse = 2;
@@ -48,5 +62,9 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     @Override
     public int retrunCoup() {
         return coup;
+    }
+
+    public void showInfo() {
+        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
     }
 }
