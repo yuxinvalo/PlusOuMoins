@@ -10,14 +10,16 @@ import java.util.Random;
 public class JoueurHumain extends JoueurAvecSecret implements Joueur {
 
     private String name;
-    int coup, nbkey;
+    private int coup, nbkey;
+    private Score score;
 
     /*Chaque fois on cree un joueurHumain, on lui donne un nom.*/
     public JoueurHumain(String name){
         this.name = name;
+        score = new Score();
     }
 
-    public void setNbkey(){
+    public void setNbkey() {
         nbkey = getCoup();
     }
 
@@ -85,6 +87,20 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
     }
 
     public void showInfo() {
-        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
+        System.out.println("[GenerateNb]" + getName() + " Class : "
+                + getClass().getName() + " give the number: " + nbkey);
     }
+
+    /**
+     * Get score service.
+     * */
+    public int getScore(){
+        return score.getScore();
+    }
+
+    public void calScore(int flag){
+        showInfo();
+        score.calScore(flag);
+    }
+
 }

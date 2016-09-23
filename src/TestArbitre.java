@@ -11,13 +11,15 @@ public class TestArbitre {
 
         intervalle = new Intervalle(0, 100);
         joueur1 = new JoueurDichotomique("Linlin", intervalle);
-        joueur2 = new JoueurIncremental("Sam");
+        joueur2 = new JoueurHumain("Sam");
         joueur3 = new JoueurIntervalleAleatoire("Panda", intervalle);
         arbitre = new Arbitre(intervalle,joueur1,joueur2);
 
         //arbitre.startGame();
 
-        arbitre.startGame2();
+       // arbitre.startGame2();
+
+        joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
 
     }
 }

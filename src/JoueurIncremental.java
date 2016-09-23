@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by tearsyu on 16-9-10.
@@ -9,15 +8,17 @@ import java.util.Scanner;
 public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     private String name;
     int coup = -1, nbkey;
+    private Score score;
     public JoueurIncremental(String name){
         this.name = name;
+        score = new Score();
     }
 
     public void setNbkey(){
         //Scanner scanner = new Scanner(System.in);
         //nbkey = scanner.nextInt();
         Random random = new Random();
-        nbkey = random.nextInt(100);
+        nbkey = random.nextInt(10);
     }
 
     public int getNbkey(){
@@ -26,8 +27,8 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
 
     public int getCoup(){
         coup = coup + 1;
-        if (coup > 100)
-            coup = 1;
+        if (coup > 10)
+            coup = 0;
         return coup;
     }
 
@@ -65,6 +66,15 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     }
 
     public void showInfo() {
-        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
+        System.out.println("[GenerateNb]" + getName() + " Class : " +
+                getClass().getName() + " give the number: " + nbkey);
+    }
+
+    public int getScore(){
+        return score.getScore();
+    }
+
+    public void calScore(int flag){
+        score.calScore(flag);
     }
 }

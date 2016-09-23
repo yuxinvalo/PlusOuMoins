@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by tearsyu on 16-9-10.
@@ -8,11 +7,13 @@ public class JoueurDichotomique extends JoueurAvecIntervalle implements Joueur{
     private String name;
     private  int coup, nbkey;
     private Intervalle intervalle;
+    private Score score;
 
     public JoueurDichotomique(String name, Intervalle intervalle){
         super(name, intervalle);
         this.name = name;
         this.intervalle = intervalle;
+        score = new Score();
     }
     public void setNbkey(){
         //Scanner scanner = new Scanner(System.in);
@@ -65,6 +66,15 @@ public class JoueurDichotomique extends JoueurAvecIntervalle implements Joueur{
     }
 
     public void showInfo() {
-        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
+        System.out.println("[GenerateNb]" + getName() + " Class : "
+                + getClass().getName() + " give the number: " + nbkey);
+    }
+
+    public int getScore(){
+        return score.getScore();
+    }
+
+    public void calScore(int flag){
+        score.calScore(flag);
     }
 }

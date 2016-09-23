@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by tearsyu on 16-9-15.
@@ -9,11 +8,13 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
     private Intervalle intervalle;
     private String name;
     private int coup, nbkey;
+    private Score score;
 
     public JoueurIntervalleAleatoire(String name, Intervalle intervalle) {
         super(name, intervalle);
         this.name = name;
         this.intervalle = intervalle;
+        score = new Score();
     }
 
     public void setNbkey(){
@@ -84,6 +85,15 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
     }
 
     public void showInfo() {
-        System.out.println(getName() + " Class : " + getClass().getName() + "give the number: " + nbkey);
+        System.out.println("[GenerateNb]" + getName() + " Class : "
+                + getClass().getName() + " give the number: " + nbkey);
+    }
+
+    public int getScore(){
+        return score.getScore();
+    }
+
+    public void calScore(int flag){
+        score.calScore(flag);
     }
 }

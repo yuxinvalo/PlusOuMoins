@@ -15,4 +15,7 @@ public interface Joueur {
     void setNbkey();
 
     void showInfo();
+
+    int getScore();
+    void calScore(int flag);
 }

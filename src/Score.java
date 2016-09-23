@@ -4,9 +4,9 @@
  * The score has 3 types, vaiquer get 2 points, nul get 1 point, the defeat get 0 points.
  */
 public class Score {
-    private int histo = 0; //Noter ordre de partie.
+    private int histo; //Noter ordre de partie.
     private Joueur joueur;
-    private int points = 0; //Les points gagnes pour un joueur, on initie quil commence par 0 point.
+    private int points; //Les points gagnes pour un joueur, on initie quil commence par 0 point.
 
     /**Jutilise la structure enum pour indiquer les points, c'est une idee de OOP pour readability et structure.
      * Vous pouvez chercher sur google et lire "enum java"
@@ -18,8 +18,9 @@ public class Score {
             this.flag = flag;
         }
     }
-    public Score(Joueur joueur){
-        this.joueur = joueur;
+    public Score() {
+        histo = 0;
+        points = 0;
     }
 
     public int getScore(){
@@ -33,9 +34,9 @@ public class Score {
      * */
     public void calScore(int flag){
         histo++;
-        if (flag == ScoreFlag.WINNER.flag){
+        if (ScoreFlag.WINNER.flag == flag){
             points = points + 2;
-        } else if (flag == ScoreFlag.NULL.flag) {
+        } else if (ScoreFlag.NULL.flag == flag) {
             points += 1;
         } else if (flag == ScoreFlag.LOOSER.flag){
             System.out.println("Looser earn nothing.");

@@ -220,18 +220,24 @@ public class Arbitre extends JoueurAvecSecret{
                     joueur1.setReponse(joueur1.testSecret(b));
                 }
 
-                //Affiche les info de la fin de partie
+                //Affiche les info de la fin de partie=======================================
                 if (joueur1.testSecret(b) == 0 && joueur2.testSecret(a) == 0){
-                    System.out.println( "[" + joueur1.getName() + "] and ]" + joueur2.getName()
-                           + "] " + " find it at the same time.");
+                    System.out.println( "[Winner]" + joueur1.getName() + " and " + joueur2.getName()
+                           + " find it at the same time.");
+                    joueur1.calScore(Score.ScoreFlag.NULL.flag);
+                    joueur2.calScore(Score.ScoreFlag.NULL.flag);
                 }
 
                 if (joueur1.testSecret(b) == 0){
-                    System.out.println(joueur2.getName() + "Find it.");
+                    System.out.println("[Winner]" +joueur2.getName() + "Find it.");
+                    joueur2.calScore(Score.ScoreFlag.WINNER.flag);
+                    joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
 
                 if (joueur2.testSecret(a) == 0){
-                    System.out.println(joueur1.getName() + "Find it.");
+                    System.out.println("[Winner]" + joueur1.getName() + "Find it.");
+                    joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+                    joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
             }while ((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
 
@@ -258,18 +264,24 @@ public class Arbitre extends JoueurAvecSecret{
                 joueur1.setReponse(joueur1.testSecret(a));
 
 
-                //Info de la fin de partie
+                //Info de la fin de partie calculer les points==============================
                 if (joueur1.testSecret(b) == 0 && joueur2.testSecret(a) == 0){
-                    System.out.println( "[" + joueur1.getName() + "] and ]" + joueur2.getName()
-                            + "] " + " find it at the same time.");
+                    System.out.println( "[Winner]" + joueur1.getName() + " and " + joueur2.getName()
+                            + " find it at the same time.");
+                    joueur1.calScore(Score.ScoreFlag.NULL.flag);
+                    joueur2.calScore(Score.ScoreFlag.NULL.flag);
                 }
 
                 if (joueur1.testSecret(b) == 0){
-                    System.out.println( "[" + joueur2.getName() + "] find it.");
+                    System.out.println( "[Winner]" + joueur2.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+                    joueur2.calScore(Score.ScoreFlag.WINNER.flag);
                 }
 
                 if (joueur2.testSecret(a) == 0){
-                    System.out.println("[" + joueur1.getName() + "] find it.");
+                    System.out.println("[Winner]" + joueur1.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+                    joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
 
             }while((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
@@ -298,18 +310,24 @@ public class Arbitre extends JoueurAvecSecret{
                 }
 
 
-                //Info de la fin de partie
+                //Info de la fin de partie================================
                 if (joueur1.testSecret(b) == 0 && joueur2.testSecret(a) == 0){
-                    System.out.println( "[" + joueur1.getName() + "] and ]" + joueur2.getName()
-                            + "] " + " find it at the same time.");
+                    System.out.println( "[Winner]" + joueur1.getName() + " and " + joueur2.getName()
+                            + " find it at the same time.");
+                    joueur1.calScore(Score.ScoreFlag.NULL.flag);
+                    joueur2.calScore(Score.ScoreFlag.NULL.flag);
                 }
 
                 if (joueur1.testSecret(b) == 0){
-                    System.out.println(joueur2.getName() + " find it.");
+                    System.out.println( "[Winner]"+ joueur2.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+                    joueur2.calScore(Score.ScoreFlag.WINNER.flag);
                 }
 
                 if (joueur2.testSecret(a) == 0){
-                    System.out.println(joueur1.getName() + " find it.");
+                    System.out.println("[Winner] " + joueur1.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+                    joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
 
                 }
 
@@ -329,18 +347,24 @@ public class Arbitre extends JoueurAvecSecret{
                 joueur1.setReponse(joueur1.testSecret(b));
 
 
-                //Info de la fin de partie
+                //Info de la fin de partie==========================================
                 if (joueur1.testSecret(b) == 0 && joueur2.testSecret(a) == 0){
-                    System.out.println( "[" + joueur1.getName() + "] and ]" + joueur2.getName()
-                            + "] " + " find it at the same time.");
+                    System.out.println( "[Winner]" + joueur1.getName() + " and " + joueur2.getName()
+                             + " find it at the same time.");
+                    joueur1.calScore(Score.ScoreFlag.NULL.flag);
+                    joueur2.calScore(Score.ScoreFlag.NULL.flag);
                 }
 
                 if (joueur1.testSecret(b) == 0){
-                    System.out.println("[" + joueur2.getName() + "] find it.");
+                    System.out.println("[Winner]" + joueur2.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+                    joueur2.calScore(Score.ScoreFlag.WINNER.flag);
                 }
 
                 if (joueur2.testSecret(a) == 0){
-                    System.out.println("[" + joueur1.getName() + "] find it.");
+                    System.out.println("[Winner]" + joueur1.getName() + " find it.");
+                    joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+                    joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
 
             } while ((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
