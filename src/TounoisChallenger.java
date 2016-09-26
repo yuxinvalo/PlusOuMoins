@@ -7,7 +7,7 @@ import java.util.Vector;
  * Created by tearsyu on 16-9-16.
  * This class is a tounois avec mode challenger. Copy from TournoisGlobal, mais startGame() different.
  */
-public class TounoisChallenger {
+public class TounoisChallenger implements Tournois{
     private Vector vectJoueur;
     private TableauDesScores tableauDesScores;
     private ArrayList aListJoueur;
@@ -45,7 +45,7 @@ public class TounoisChallenger {
     /**
      * ArrayList est une subclasse de collection, on l'utilise pour encapsuler les joueurs comme une collection.
      * */
-    public void addJoueurInAList(Joueur joueur){
+    public void addJoueurInList(Joueur joueur){
         aListJoueur.add(joueur);
 
         //Cest pour iterater la collection.
@@ -80,12 +80,10 @@ public class TounoisChallenger {
     }
 
 
-
-
     /**C'est un mode du jeux : un challenger fait le tournois avec tous le monde en calculant la moyenne des points.
      * EX. joueur A, B, C, D, A->B, A->C. A->D, puis on calcule Apoints/3
      * */
-    public void startTournois(Intervalle intervalle, int nbPartie){
+    public void startGame(Intervalle intervalle, int nbPartie){
         Arbitre arbitre;
         Joueur joueurChallenger = null, joueurTmp = null;
         joueurChallenger = (Joueur) vectJoueur.get(0);
@@ -111,9 +109,6 @@ public class TounoisChallenger {
         }
     }
 
-    public void showTableScore(){
-        tableauDesScores.showTableScore();
-    }
 
     public static void main(String[] args){
         Joueur joueur1, joueur2, joueur3, joueur4, joueur5 ;

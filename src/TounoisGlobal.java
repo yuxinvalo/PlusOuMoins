@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Created by tearsyu on 16-9-16.
  */
-public class TounoisGlobal {
+public class TounoisGlobal implements Tournois {
     private Vector vectJoueur;
     private TableauDesScores tableauDesScores;
     private ArrayList aListJoueur;
@@ -84,7 +84,7 @@ public class TounoisGlobal {
      * */
     int begin = 0;
     Joueur joueurBegin = null, joueurAccpt = null;
-    public void startTournois(Intervalle intervalle, int nbPartie){
+    public void startGame(Intervalle intervalle, int nbPartie){
         Arbitre arbitre;
         //mot cle 'try{...}catch(Exception e){...}' cest pour saisir les erreurs au cas ou il y a un bug.
         try {
@@ -117,7 +117,7 @@ public class TounoisGlobal {
             }
             //begin auto add 1, et recursive
             begin++;
-           startTournois(intervalle, nbPartie);
+           startGame(intervalle, nbPartie);
         }catch (Exception e){
            // System.out.println("[Error]: 'out of range': I dont want to deal it, so I just discard it.");
             e.printStackTrace();
@@ -150,7 +150,7 @@ public class TounoisGlobal {
         tounois.showInfo();
         Intervalle intervalle = new Intervalle(0, 10);
        // tounois.startTournois(intervalle, 4);
-        tounois.startTournois(intervalle, 2);
+        tounois.startGame(intervalle, 2);
         tounois.showTableScore();
     }
 }
