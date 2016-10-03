@@ -1,8 +1,10 @@
+package Joueur;
+
 import java.util.Random;
 
 /**
  * Created by tearsyu on 16-9-11.
- * The class Arbitre is a detector of the game.
+ * The class Joueur.Arbitre is a detector of the game.
  * jouer() is used to detect the cheater between two players;
  * startGame() is used to hold a game with two players, this method is a little complexe.
  * Because we need to deal with the joueur intervalle.
@@ -68,16 +70,16 @@ public class Arbitre extends JoueurAvecSecret{
      * */
     public void startGame(){
         int a, b;
-        //Joueur joueur = null;
+        //Joueur.Joueur joueur = null;
 
         System.out.println("We start , nb secret is : " + getCoup());
 
         //if play use dichotomique, we need to change step of game here.
         //if joueur1 and joueur 2 are all ths joueur DichoIntervalle
-        if ((joueur1.getClass().getName().equals("JoueurIntervalleAleatoire") &&
-                joueur2.getClass().getName().equals("JoueurIntervalleAleatoire")) ||
-                (joueur1.getClass().getName().equals("JoueurDichotomique")) &&
-                        joueur2.getClass().getName().equals("JoueurDichotomique")) {
+        if ((joueur1.getClass().getName().equals("Joueur.JoueurIntervalleAleatoire") &&
+                joueur2.getClass().getName().equals("Joueur.JoueurIntervalleAleatoire")) ||
+                (joueur1.getClass().getName().equals("Joueur.JoueurDichotomique")) &&
+                        joueur2.getClass().getName().equals("Joueur.JoueurDichotomique")) {
 
            //-----------------------------------
             do{
@@ -108,8 +110,8 @@ public class Arbitre extends JoueurAvecSecret{
 
 
             //if joueur2 is a joueur dichoIntervalle
-        } else if (joueur2.getClass().getName().equals("JoueurDichotomique") ||
-                joueur2.getClass().getName().equals("JoueurIntervalleAleatoire")) {
+        } else if (joueur2.getClass().getName().equals("Joueur.JoueurDichotomique") ||
+                joueur2.getClass().getName().equals("Joueur.JoueurIntervalleAleatoire")) {
 
             do{
                 b = joueur1.getCoup();
@@ -131,8 +133,8 @@ public class Arbitre extends JoueurAvecSecret{
             } while((testSecret(a) != 0) && (testSecret(b) != 0));
 
             //if joueur 1 is ...
-        } else if (joueur1.getClass().getName().equals("JoueurDichotomique") ||
-                    joueur1.getClass().getName().equals("JoueurIntervalleAleatoire")) {
+        } else if (joueur1.getClass().getName().equals("Joueur.JoueurDichotomique") ||
+                    joueur1.getClass().getName().equals("Joueur.JoueurIntervalleAleatoire")) {
 
             do{
                 a = joueur1.getCoup();
@@ -173,7 +175,14 @@ public class Arbitre extends JoueurAvecSecret{
     }
 
     /**
-     * Donc cette methode sert a
+     * Donc cette methode sert a gerer une partie pour deux joueurs.
+     * Processus: 1. les joueurx generent les nb a trouver.
+     *            2. (Detecter les tricheurs, exo15) Joueur.Arbitre verifie les nb sont superieurs a lintervalle.
+     *            3. Verifier si les joueurs sont les joueurs avec intervalle, parce quon doit configurer
+     *                l'intervalle setMax et setMin des joueurs de ce type.
+     *            4. Boucle:Test les nbs de chaqu'un si les joueurs ont trouver.
+     *            5. Si l'un de joueur a trouve ou les deux ont trouvent en meme temps, calculer les scores.
+     *
      * */
     public void startGame2(){
         int a, b;
@@ -183,11 +192,33 @@ public class Arbitre extends JoueurAvecSecret{
         joueur1.showInfo();
         joueur2.showInfo();
 
+        //Traiter le cas de la triche
+        if(joueur1.getNbkey() > intervalle.getSup() && joueur2.getNbkey() > intervalle.getSup()){
+            System.out.println("[Cheater] Two players cheats. They are " + joueur1.getName() + " and "
+                    + joueur2.getName());
+            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur1.setCheater(true);
+            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur2.setCheater(true);
+            //On ajoute return ici, cest pour dire cette methode est fini si il y a les tricheurs.
+            //C'est pas necessaire de continuer la partie.
+            return;
+        } else if(joueur1.getNbkey() > intervalle.getSup()) {
+            System.out.println("[Cheater] Joueur1 is a cheater. He is " + joueur1.getName());
+            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur1.setCheater(true);
+            joueur2.calScore(Score.ScoreFlag.WINNER.flag);
+            return;
+        } else if (joueur2.getNbkey() > intervalle.getSup()){
+            System.out.println("[Cheater] Joueur2 is a cheater. He is " + joueur2.getName());
+            joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur2.setCheater(true);
+        }
 
-        if ((joueur1.getClass().getName().equals("JoueurIntervalleAleatoire") &&
-                joueur2.getClass().getName().equals("JoueurIntervalleAleatoire")) ||
-                (joueur1.getClass().getName().equals("JoueurDichotomique")) &&
-                        joueur2.getClass().getName().equals("JoueurDichotomique")){
+
+        if ((joueur1.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle") &&
+                joueur2.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle"))){
 
             do{
                 //joueur 1 tour
@@ -241,8 +272,7 @@ public class Arbitre extends JoueurAvecSecret{
                 }
             }while ((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
 
-        } else if (joueur1.getClass().getName().equals("JoueurDichotomique") ||
-                joueur1.getClass().getName().equals("JoueurIntervalleAleatoire")){
+        } else if (joueur1.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle")){
             do{
                 //joueur1 is a special player, the intervalle need to be deal.
                 a = joueur1.getCoup();
@@ -286,8 +316,7 @@ public class Arbitre extends JoueurAvecSecret{
 
             }while((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
 
-        } else if (joueur2.getClass().getName().equals("JoueurDichotomique") ||
-                    joueur2.getClass().getName().equals("JoueurIntervalleAleatoire")){
+        } else if (joueur2.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle")){
 
             do{
                 //joueur 2, b need to deal.

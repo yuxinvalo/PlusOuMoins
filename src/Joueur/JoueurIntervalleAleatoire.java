@@ -1,3 +1,5 @@
+package Joueur;
+
 import java.util.Random;
 
 /**
@@ -9,12 +11,14 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
     private String name;
     private int coup, nbkey;
     private Score score;
+    private boolean isCheater;
 
     public JoueurIntervalleAleatoire(String name, Intervalle intervalle) {
         super(name, intervalle);
         this.name = name;
         this.intervalle = intervalle;
         score = new Score();
+        isCheater = false;
     }
 
     public void setNbkey(){
@@ -65,11 +69,11 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
     public int testSecret(int essai) {
         int reponse;
         if (essai == nbkey){
-            reponse = 0;
+            reponse = Arbitre.Reponse.FOUND.flag;
         } else if(essai < nbkey) {
-            reponse = 1;
+            reponse = Arbitre.Reponse.BIGGER.flag;
         } else {
-            reponse = 2;
+            reponse = Arbitre.Reponse.SMALLER.flag;
         }
         return reponse;
     }
@@ -95,5 +99,13 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
 
     public void calScore(int flag){
         score.calScore(flag);
+    }
+
+    @Override
+    public boolean isCheater() {
+        return isCheater;
+    }
+    public void setCheater(boolean b){
+        this.isCheater = b;
     }
 }

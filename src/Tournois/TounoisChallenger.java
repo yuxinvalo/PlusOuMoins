@@ -1,3 +1,8 @@
+package Tournois;
+
+import Joueur.*;
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -81,58 +86,53 @@ public class TounoisChallenger implements Tournois{
 
 
     /**C'est un mode du jeux : un challenger fait le tournois avec tous le monde en calculant la moyenne des points.
-     * EX. joueur A, B, C, D, A->B, A->C. A->D, puis on calcule Apoints/3
+     * EX. joueur A, B, C, D, A->B, A->C. A->D, puis on calcule A points/3 et faire comparason avec les autres
      * */
     public void startGame(Intervalle intervalle, int nbPartie){
         Arbitre arbitre;
-        Joueur joueurChallenger = null, joueurTmp = null;
+        Joueur joueurChallenger, joueurTmp;
         joueurChallenger = (Joueur) vectJoueur.get(0);
-        //arbitre = new Arbitre(intervalle, joueurChallenger, joueurTmp);
+
+
         for (int i = vectJoueur.size() - 1; i > 0; i--){
             joueurTmp = (Joueur) vectJoueur.get(i);
             for(int j = 0; j < nbPartie; j++){
                 if (j < nbPartie/2) {
-                    System.out.println("[Order] Joueur " + joueurChallenger.getName() + " firstly");
+                    System.out.println("[Order] Joueur.Joueur " + joueurChallenger.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueurChallenger, joueurTmp);
                     arbitre.startGame2();
                 } else {
-                    System.out.println("[OrderReverse] Joueur" + joueurTmp.getName() + " firstly");
+                    System.out.println("[OrderReverse] Joueur.Joueur" + joueurTmp.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueurTmp, joueurChallenger);
                     arbitre.startGame2();
                 }
             }
+
             tableauDesScores.setScoreTable(joueurChallenger);
             tableauDesScores.setScoreTable(joueurTmp);
-            System.out.println("[Score] Challenger "+ joueurChallenger.getName() + " score is : " +
+            System.out.println("[Joueur.Score] Challenger "+ joueurChallenger.getName() + " score is : " +
                     joueurChallenger.getScore()/(vectJoueur.size() - 1));
-            System.out.println("[Score] Player " + joueurTmp.getName() + " score is: " + joueurTmp.getScore());
+            System.out.println("[Joueur.Score] Player " + joueurTmp.getName() + " score is: " + joueurTmp.getScore());
         }
+
+        int max;
+        Joueur champion = null;
+        Joueur chanllenger = (Joueur)vectJoueur.get(0);
+        max = chanllenger.getScore()/3;
+        for (int i = 1; i < vectJoueur.size(); i++){
+            Joueur joueur = (Joueur)vectJoueur.get(i);
+            if (max < joueur.getScore()){
+                max = joueur.getScore();
+                champion = joueur;
+            }
+        }
+        System.out.println("[Champion]Champion is born: " + champion.getName() );
     }
 
-
-    public static void main(String[] args){
-        Joueur joueur1, joueur2, joueur3, joueur4, joueur5 ;
-        joueur1 = new JoueurIncremental("1");
-        joueur2 = new JoueurHumain("2");
-        joueur3 = new JoueurIncremental("3");
-        //joueur4 = new JoueurIncremental("4");
-        //joueur5 = new JoueurIncremental("5");
-
-        TounoisChallenger tounois = new TounoisChallenger();
-
-        //Test addJoueur(Joueur joueur)
-        tounois.addJoueur(joueur1);
-        tounois.addJoueur(joueur2);
-        tounois.addJoueur(joueur3);
-       // tounois.addJoueur(joueur4);
-        //tounois.addJoueur(joueur5);*/
-
-
-        tounois.showInfo();
-        //Intervalle intervalle = new Intervalle(0, 10);
-       // tounois.startTournois(intervalle, 4);
-        //tounois.showTableScore();
-        int i = 3;
-        System.out.println(i/2);
+    public void showTableScore(){
+        tableauDesScores.showTableScore();
+        Joueur challenger = (Joueur) vectJoueur.get(0);
+        System.out.println("The challenger is : " + challenger.getName() + " He earns points: " +
+        challenger.getScore() / 3 + ".}");
     }
 }

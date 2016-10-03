@@ -1,34 +1,38 @@
+package Joueur;
+
 import java.util.Random;
 
 /**
  * Created by tearsyu on 16-9-10.
- * Cette classe est identique a la classe JoueurHumain, juste change la facon de
- * generer le nombre. Ce joueur genere les nombres incrementals.
  */
-public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
+public class JoueurDichotomique extends JoueurAvecIntervalle implements Joueur{
     private String name;
-    int coup = -1, nbkey;
+    private  int coup, nbkey;
+    private Intervalle intervalle;
     private Score score;
-    public JoueurIncremental(String name){
-        this.name = name;
-        score = new Score();
-    }
+    private boolean isCheater;
 
+    public JoueurDichotomique(String name, Intervalle intervalle){
+        super(name, intervalle);
+        this.name = name;
+        this.intervalle = intervalle;
+        score = new Score();
+        isCheater = false;
+    }
     public void setNbkey(){
         //Scanner scanner = new Scanner(System.in);
         //nbkey = scanner.nextInt();
         Random random = new Random();
-        nbkey = random.nextInt(10);
+        nbkey = random.nextInt(intervalle.getSup());
     }
 
     public int getNbkey(){
         return nbkey;
     }
 
+
     public int getCoup(){
-        coup = coup + 1;
-        if (coup > 10)
-            coup = 0;
+        coup = intervalle.getMilieu();
         return coup;
     }
 
@@ -47,16 +51,16 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     public int testSecret(int essai) {
         int reponse;
         if (essai == nbkey){
-            reponse = 0;
+            reponse = Arbitre.Reponse.FOUND.flag;
         } else if(essai < nbkey) {
-            reponse = 1;
+            reponse = Arbitre.Reponse.BIGGER.flag;
         } else {
-            reponse = 2;
+            reponse = Arbitre.Reponse.SMALLER.flag;
         }
         return reponse;
     }
 
-    public String getName() {
+    public String getName(){
         return name;
     }
 
@@ -66,8 +70,8 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     }
 
     public void showInfo() {
-        System.out.println("[GenerateNb]" + getName() + " Class : " +
-                getClass().getName() + " give the number: " + nbkey);
+        System.out.println("[GenerateNb]" + getName() + " Class : "
+                + getClass().getName() + " give the number: " + nbkey);
     }
 
     public int getScore(){
@@ -76,5 +80,13 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
 
     public void calScore(int flag){
         score.calScore(flag);
+    }
+
+    @Override
+    public boolean isCheater() {
+        return isCheater;
+    }
+    public void setCheater(boolean b){
+        this.isCheater = b;
     }
 }

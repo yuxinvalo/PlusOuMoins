@@ -1,3 +1,5 @@
+package Joueur;
+
 /**
  * Created by tearsyu on 16-9-12.
  */

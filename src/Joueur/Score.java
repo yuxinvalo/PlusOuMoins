@@ -1,6 +1,10 @@
+package Joueur;
+
+import Joueur.Joueur;
+
 /**
  * Created by tearsyu on 16-9-19.
- * This class allows to keep the score. Every Score attach a joueur and note his game status.
+ * This class allows to keep the score. Every Joueur.Score attach a joueur and note his game status.
  * The score has 3 types, vaiquer get 2 points, nul get 1 point, the defeat get 0 points.
  */
 public class Score {

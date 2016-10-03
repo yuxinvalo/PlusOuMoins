@@ -1,3 +1,7 @@
+package Tournois;
+
+import Joueur.*;
+
 import java.util.Collection;
 
 /**
@@ -10,4 +14,5 @@ public interface Tournois {
 
     void showInfo();
     void startGame(Intervalle intervalle, int nbPartie);
+    void showTableScore();
 }

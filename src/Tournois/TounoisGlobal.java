@@ -1,3 +1,6 @@
+package Tournois;
+
+import Joueur.*;
 import java.util.*;
 
 /**
@@ -90,7 +93,7 @@ public class TounoisGlobal implements Tournois {
         try {
             //Condition de finir c'est begin = joueur C
             if (begin == vectJoueur.size() - 1) {
-                System.out.println("[DEBUG]Finish loop here.");
+                System.out.println("[Champion] The winner is born : " + tableauDesScores.findChampion().getName());
                 return;
             }
 
@@ -103,11 +106,11 @@ public class TounoisGlobal implements Tournois {
 
                 for (int j = 0; j < nbPartie; j++) {
                     if (j < nbPartie / 2) {
-                        System.out.println("[Order] Joueur " + joueurBegin.getName() + " firstly");
+                        System.out.println("[Order] Joueur.Joueur " + joueurBegin.getName() + " firstly");
                         arbitre = new Arbitre(intervalle, joueurBegin, joueurAccpt);
                         arbitre.startGame2();
                     } else {
-                        System.out.println("[Order] Joueur " + joueurAccpt.getName() + " firstly");
+                        System.out.println("[Order] Joueur.Joueur " + joueurAccpt.getName() + " firstly");
                         arbitre = new Arbitre(intervalle, joueurAccpt, joueurBegin);
                         arbitre.startGame2();
                     }
@@ -129,28 +132,5 @@ public class TounoisGlobal implements Tournois {
         tableauDesScores.showTableScore();
     }
 
-    public static void main(String[] args){
-        Joueur joueur1, joueur2, joueur3, joueur4, joueur5 ;
-        joueur1 = new JoueurIncremental("1");
-        joueur2 = new JoueurHumain("2");
-        joueur3 = new JoueurIncremental("3");
-        //joueur4 = new JoueurIncremental("4");
-        //joueur5 = new JoueurIncremental("5");
 
-        TounoisGlobal tounois = new TounoisGlobal();
-
-        //Test addJoueur(Joueur joueur)
-        tounois.addJoueur(joueur1);
-        tounois.addJoueur(joueur2);
-        tounois.addJoueur(joueur3);
-       // tounois.addJoueur(joueur4);
-        //tounois.addJoueur(joueur5);*/
-
-
-        tounois.showInfo();
-        Intervalle intervalle = new Intervalle(0, 10);
-       // tounois.startTournois(intervalle, 4);
-        tounois.startGame(intervalle, 2);
-        tounois.showTableScore();
-    }
 }

@@ -1,3 +1,7 @@
+package Tournois;
+
+import Joueur.*;
+
 import java.util.*;
 
 /**
@@ -111,11 +115,11 @@ public class TournoisPyramidal implements Tournois{
             joueur2 = (Joueur) vectJoueur.get(1);
             for (int j = 0; j < nbPartie; j++) {
                 if (j < nbPartie / 2) {
-                    System.out.println("[Order] Joueur " + joueur1.getName() + " firstly");
+                    System.out.println("[Order] Joueur.Joueur " + joueur1.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueur1, joueur2);
                     arbitre.startGame2();
                 } else {
-                    System.out.println("[Order] Joueur " + joueur2.getName() + " firstly");
+                    System.out.println("[Order] Joueur.Joueur " + joueur2.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueur2, joueur1);
                     arbitre.startGame2();
                 }
@@ -140,7 +144,7 @@ public class TournoisPyramidal implements Tournois{
          * */
 
 //        if (vectJoueur.size() == 1){
-//            Joueur champion = (Joueur) vectJoueur.get(0);
+//            Joueur.Joueur champion = (Joueur.Joueur) vectJoueur.get(0);
 //            System.out.println("[Champion] The champion is born: " + champion.getName());
 //            return;
 //        }
@@ -158,11 +162,11 @@ public class TournoisPyramidal implements Tournois{
 
             for (int j = 0; j < nbPartie; j++) {
                 if (j < nbPartie / 2) {
-                    System.out.println("[Order] Joueur " + joueur1.getName() + " firstly");
+                    System.out.println("[Order] Joueur.Joueur " + joueur1.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueur1, joueur2);
                     arbitre.startGame2();
                 } else {
-                    System.out.println("[Order] Joueur " + joueur2.getName() + " firstly");
+                    System.out.println("[Order] Joueur.Joueur " + joueur2.getName() + " firstly");
                     arbitre = new Arbitre(intervalle, joueur2, joueur1);
                     arbitre.startGame2();
                 }
@@ -190,29 +194,33 @@ public class TournoisPyramidal implements Tournois{
         startGame(intervalle, nbPartie);
     }
 
+    public void showTableScore(){
+        tableauDesScores.showTableScore();
+    }
+
     public static void main(String[] args){
         Intervalle intervalle;
         Joueur joueur1, joueur2, joueur3, joueur4, joueur5;
         intervalle = new Intervalle(0, 10);
         joueur1 = new JoueurDichotomique("Linlin", intervalle);
-        joueur2 = new JoueurIncremental("Sam");
+        joueur2 = new TricheurNonIntelij("TrinonIntel", intervalle);
         joueur3 = new JoueurIntervalleAleatoire("Panda", intervalle);
-        joueur4 = new JoueurIncremental("Xiqui");
-        joueur5 = new JoueurHumain("toto");
+        //joueur4 = new JoueurIncremental("Xiqui");
+        joueur5 = new TricheurIntelij("TriIntej", intervalle);
 
         TournoisPyramidal tp = new TournoisPyramidal();
         tp.addJoueur(joueur1);
         tp.addJoueur(joueur2);
         tp.addJoueur(joueur3);
-        tp.addJoueur(joueur4);
+       // tp.addJoueur(joueur4);
         tp.addJoueur(joueur5);
         //tp.randomPos();
 
         //tp.rmJoueur(joueur1);
         //tp.rmJoueur(joueur3);
-        //tp.showInfo();
+
         tp.startGame(intervalle, 1);
+        tp.showTableScore();
 
     }
-
 }

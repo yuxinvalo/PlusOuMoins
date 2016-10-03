@@ -1,3 +1,5 @@
+import Joueur.*;
+
 /**
  * Created by tearsyu on 16-9-9.
  * This class is a test to the other class.

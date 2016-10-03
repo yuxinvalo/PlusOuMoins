@@ -1,9 +1,11 @@
+package Joueur;
+
 import java.util.Random;
 
 /**
  * Created by tearsyu on 16-9-9.
  * This class is a normal player who guess the number without logic.
- * Cette classe herite JoueurAvecSecret qui se trouve dans exo10, implemente l'interface de Joueur
+ * Cette classe herite Joueur.JoueurAvecSecret qui se trouve dans exo10, implemente l'interface de Joueur.Joueur
  * dans l'exo 7.
  * Teste pour JoueurHuamin sera effectue dans la classe PlusOuMoins3.java.
  */
@@ -12,11 +14,13 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
     private String name;
     private int coup, nbkey;
     private Score score;
+    private boolean isCheater;
 
     /*Chaque fois on cree un joueurHumain, on lui donne un nom.*/
     public JoueurHumain(String name){
         this.name = name;
         score = new Score();
+        isCheater = false;
     }
 
     public void setNbkey() {
@@ -63,11 +67,11 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
     public int testSecret(int essai){
         int reponse;
         if (essai == coup){
-            reponse = 0;
+            reponse = Arbitre.Reponse.FOUND.flag;
         } else if(essai < coup) {
-            reponse = 1;
+            reponse = Arbitre.Reponse.BIGGER.flag;
         } else {
-            reponse = 2;
+            reponse = Arbitre.Reponse.SMALLER.flag;
         }
         return reponse;
     }
@@ -101,6 +105,14 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
     public void calScore(int flag){
         showInfo();
         score.calScore(flag);
+    }
+
+    @Override
+    public boolean isCheater() {
+        return isCheater;
+    }
+    public void setCheater(boolean b){
+        this.isCheater = b;
     }
 
 }
