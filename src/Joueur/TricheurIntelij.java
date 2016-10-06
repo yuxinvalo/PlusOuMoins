@@ -57,20 +57,22 @@ public class TricheurIntelij extends JoueurAvecIntervalle implements Joueur{
     public int testSecret(int essai) {
         int reponse;
         if (isFirstGuess) {
-            if (essai >= intervalle.getSup() - essai) {
-                nbkey = intervalle.getInf();
+            if (essai > intervalle.getSup() - essai) {
+                nbkey = intervalle.getInf()+1;
+                System.out.println("[Cheater]Now he change:nbKey to : " + nbkey );
                 isFirstGuess = false;
             } else {
-                nbkey = intervalle.getSup();
+                nbkey = intervalle.getSup()-1;
                 isFirstGuess = false;
+                System.out.println("[Cheater]Now he change:nbKey to : " + nbkey);
             }
         }
         if (essai == nbkey) {
             reponse = Arbitre.Reponse.FOUND.flag;
         } else if (essai < nbkey) {
-            reponse = Arbitre.Reponse.SMALLER.flag;
-        } else {
             reponse = Arbitre.Reponse.BIGGER.flag;
+        } else {
+            reponse = Arbitre.Reponse.SMALLER.flag;
         }
         return reponse;
 
@@ -106,4 +108,7 @@ public class TricheurIntelij extends JoueurAvecIntervalle implements Joueur{
         this.isCheater = b;
     }
 
+    public void  setIntervalle(Intervalle intervalle){
+        this.intervalle = intervalle;
+    }
 }

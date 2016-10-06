@@ -24,4 +24,5 @@ public interface Joueur {
     //These methodes are used to set cheater and tell us if this player is a cheater or not.
     void setCheater(boolean b);
     boolean isCheater();
+    void setIntervalle(Intervalle intervalle);
 }

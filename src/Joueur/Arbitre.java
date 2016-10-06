@@ -174,6 +174,33 @@ public class Arbitre extends JoueurAvecSecret{
         }
     }
 
+    public boolean testCheater(){
+        boolean bool = false;
+        if(joueur1.getNbkey() > intervalle.getSup() && joueur2.getNbkey() > intervalle.getSup()){
+            System.out.println("[Cheater] Two players cheats. They are " + joueur1.getName() + " and "
+                    + joueur2.getName());
+            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur1.setCheater(true);
+            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur2.setCheater(true);
+            bool = true;
+            //On ajoute return ici, cest pour dire cette methode est fini si il y a les tricheurs.
+            //C'est pas necessaire de continuer la partie.
+        } else if(joueur1.getNbkey() > intervalle.getSup()) {
+            System.out.println("[Cheater] Joueur1 is a cheater. He is " + joueur1.getName());
+            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur1.setCheater(true);
+            joueur2.calScore(Score.ScoreFlag.WINNER.flag);
+            bool = true;
+        } else if (joueur2.getNbkey() > intervalle.getSup()){
+            System.out.println("[Cheater] Joueur2 is a cheater. He is " + joueur2.getName());
+            joueur1.calScore(Score.ScoreFlag.WINNER.flag);
+            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
+            joueur2.setCheater(true);
+            bool = true;
+        }
+        return  bool;
+    }
     /**
      * Donc cette methode sert a gerer une partie pour deux joueurs.
      * Processus: 1. les joueurx generent les nb a trouver.
@@ -192,60 +219,45 @@ public class Arbitre extends JoueurAvecSecret{
         joueur1.showInfo();
         joueur2.showInfo();
 
-        //Traiter le cas de la triche
-        if(joueur1.getNbkey() > intervalle.getSup() && joueur2.getNbkey() > intervalle.getSup()){
-            System.out.println("[Cheater] Two players cheats. They are " + joueur1.getName() + " and "
-                    + joueur2.getName());
-            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
-            joueur1.setCheater(true);
-            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
-            joueur2.setCheater(true);
-            //On ajoute return ici, cest pour dire cette methode est fini si il y a les tricheurs.
-            //C'est pas necessaire de continuer la partie.
-            return;
-        } else if(joueur1.getNbkey() > intervalle.getSup()) {
-            System.out.println("[Cheater] Joueur1 is a cheater. He is " + joueur1.getName());
-            joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
-            joueur1.setCheater(true);
-            joueur2.calScore(Score.ScoreFlag.WINNER.flag);
-            return;
-        } else if (joueur2.getNbkey() > intervalle.getSup()){
-            System.out.println("[Cheater] Joueur2 is a cheater. He is " + joueur2.getName());
-            joueur1.calScore(Score.ScoreFlag.WINNER.flag);
-            joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
-            joueur2.setCheater(true);
-        }
+        //Traiter le cas de la triche---------------------------------------------------------------------
+        boolean bool = testCheater();
+        if (bool == true){return;}
+        //Traiter le tricheur----------------------END-------------------------------------------------------
 
 
-        if ((joueur1.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle") &&
-                joueur2.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle"))){
+        if ((joueur1 instanceof JoueurAvecIntervalle) && (joueur2 instanceof JoueurAvecIntervalle)){
+
+            Intervalle intervalleCopy = new Intervalle(intervalle.getInf(), intervalle.getSup());
+            joueur2.setIntervalle(intervalleCopy);
 
             do{
                 //joueur 1 tour
                 a = joueur1.getCoup();
                 b = joueur2.getCoup();
-                Intervalle intervalleCopy = new Intervalle(intervalle.getInf(), intervalle.getSup());
+                System.out.println("[DUBUG] a: " + a + " b: " + b);
 
-                if (joueur2.testSecret(a) == 1) {
-
+                if (joueur2.testSecret(a) == Reponse.BIGGER.flag) {
                     intervalle.setNumMin(a);
                     System.out.println(joueur1.getName() + " guess it is: " + a);
                     joueur2.setReponse(joueur2.testSecret(a));
                 }
 
-                if (joueur1.testSecret(b) == 1 ){
+                if (joueur1.testSecret(b) == Reponse.BIGGER.flag ){
+                    System.out.println("[DEBUG]" + intervalleCopy.getInf() + intervalleCopy.getSup());
                     intervalleCopy.setNumMin(b);
-                    System.out.println(joueur2.getName() + "guess it is " + b);
+                    System.out.println("[DEBUG]" + intervalleCopy.getNumMin() + intervalleCopy.getNumMax());
+                    System.out.println(joueur2.getName() + " guess it is " + b);
                     joueur1.setReponse(joueur1.testSecret(b));
                 }
 
-                if(joueur2.testSecret(a) == 2){
+                if(joueur2.testSecret(a) == Reponse.SMALLER.flag){
                     intervalle.setNumMax(a);
-                    System.out.println(joueur1.getName() + " guess it is: " + a);
+                    System.out.println(joueur1.getName() + " guess it is smaller: " + a);
                     joueur2.setReponse(joueur2.testSecret(a));
                 }
 
-                if(joueur1.testSecret(b) == 2) {
+                if(joueur1.testSecret(b) == Reponse.SMALLER.flag) {
+                    //System.out.println("[DEBUG]" + intervalleCopy.getInf() + intervalleCopy.getSup());
                     intervalleCopy.setNumMax(b);
                     System.out.println(joueur2.getName() + " guess it is: " + b);
                     joueur1.setReponse(joueur1.testSecret(b));
@@ -260,19 +272,20 @@ public class Arbitre extends JoueurAvecSecret{
                 }
 
                 if (joueur1.testSecret(b) == 0){
-                    System.out.println("[Winner]" +joueur2.getName() + "Find it.");
+                    System.out.println("[Winner]" +joueur2.getName() + " Find it.");
                     joueur2.calScore(Score.ScoreFlag.WINNER.flag);
                     joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
 
                 if (joueur2.testSecret(a) == 0){
-                    System.out.println("[Winner]" + joueur1.getName() + "Find it.");
+                    System.out.println("[Winner]" + joueur1.getName() + " Find it.");
                     joueur1.calScore(Score.ScoreFlag.WINNER.flag);
                     joueur2.calScore(Score.ScoreFlag.LOOSER.flag);
                 }
             }while ((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
 
-        } else if (joueur1.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle")){
+            //if JOUEUR 1 est un joueurAvec intervalle
+        } else if (joueur1 instanceof JoueurAvecIntervalle){
             do{
                 //joueur1 is a special player, the intervalle need to be deal.
                 a = joueur1.getCoup();
@@ -316,8 +329,8 @@ public class Arbitre extends JoueurAvecSecret{
 
             }while((joueur1.testSecret(b) != 0) && (joueur2.testSecret(a) != 0));
 
-        } else if (joueur2.getClass().getSuperclass().getName().equals("Joueur.JoueurAvecIntervalle")){
-
+            //if JOUEUR2 est un joueur avec intervalle
+        } else if (joueur2 instanceof JoueurAvecIntervalle){
             do{
                 //joueur 2, b need to deal.
                 a = joueur1.getCoup();
@@ -325,6 +338,7 @@ public class Arbitre extends JoueurAvecSecret{
 
                 System.out.println(joueur1.getName() + " guess it is: " + a);
                 joueur2.setReponse(joueur2.testSecret(a));
+
 
                 if (joueur1.testSecret(b) == 1){
                     intervalle.setNumMin(b);
@@ -338,6 +352,10 @@ public class Arbitre extends JoueurAvecSecret{
                     joueur1.setReponse(joueur1.testSecret(b));
                 }
 
+                if (joueur1.testSecret(b) == 0){
+                    System.out.println(joueur2.getName() + " guess it is "+ b);
+                    joueur1.setReponse(Reponse.FOUND.flag);
+                }
 
                 //Info de la fin de partie================================
                 if (joueur1.testSecret(b) == 0 && joueur2.testSecret(a) == 0){
@@ -347,13 +365,13 @@ public class Arbitre extends JoueurAvecSecret{
                     joueur2.calScore(Score.ScoreFlag.NULL.flag);
                 }
 
-                if (joueur1.testSecret(b) == 0){
+                if (joueur1.testSecret(b) == Reponse.FOUND.flag){
                     System.out.println( "[Winner]"+ joueur2.getName() + " find it.");
                     joueur1.calScore(Score.ScoreFlag.LOOSER.flag);
                     joueur2.calScore(Score.ScoreFlag.WINNER.flag);
                 }
 
-                if (joueur2.testSecret(a) == 0){
+                if (joueur2.testSecret(a) == Reponse.FOUND.flag){
                     System.out.println("[Winner] " + joueur1.getName() + " find it.");
                     joueur1.calScore(Score.ScoreFlag.WINNER.flag);
                     joueur2.calScore(Score.ScoreFlag.LOOSER.flag);

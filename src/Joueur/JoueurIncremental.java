@@ -86,6 +86,12 @@ public class JoueurIncremental extends JoueurAvecSecret implements Joueur {
     public boolean isCheater() {
         return isCheater;
     }
+
+    @Override
+    public void setIntervalle(Intervalle intervalle) {
+
+    }
+
     public void setCheater(boolean b){
         this.isCheater = b;
     }

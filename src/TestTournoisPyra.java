@@ -19,15 +19,17 @@ public class TestTournoisPyra {
         tp.addJoueur(joueur2);
         tp.addJoueur(joueur3);
         tp.addJoueur(joueur4);
-        tp.addJoueur(joueur5);
+       // tp.addJoueur(joueur5);
         //tp.randomPos();
 
         //tp.rmJoueur(joueur1);
         //tp.rmJoueur(joueur3);
-
+        if(joueur1 instanceof JoueurAvecIntervalle){
+            System.out.println("true");
+        }
         tp.startGame(intervalle, 2);
-        //tp.showTableScore();
-        tp.randomPos();
+        tp.showTableScore();
+       // tp.randomPos();
     }
 
 }

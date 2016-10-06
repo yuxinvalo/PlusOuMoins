@@ -105,6 +105,12 @@ public class JoueurIntervalleAleatoire extends JoueurAvecIntervalle implements J
     public boolean isCheater() {
         return isCheater;
     }
+
+    @Override
+    public void setIntervalle(Intervalle intervalle) {
+
+    }
+
     public void setCheater(boolean b){
         this.isCheater = b;
     }

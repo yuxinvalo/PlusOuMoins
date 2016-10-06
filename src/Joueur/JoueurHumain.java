@@ -18,6 +18,7 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
 
     /*Chaque fois on cree un joueurHumain, on lui donne un nom.*/
     public JoueurHumain(String name){
+        //super();
         this.name = name;
         score = new Score();
         isCheater = false;
@@ -39,7 +40,7 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
 
     public int getCoup(){
         Random random = new Random();
-        coup = random.nextInt(10);
+        coup = random.nextInt(100);
         return coup;
     }
 
@@ -66,9 +67,9 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
      * */
     public int testSecret(int essai){
         int reponse;
-        if (essai == coup){
+        if (essai == nbkey){
             reponse = Arbitre.Reponse.FOUND.flag;
-        } else if(essai < coup) {
+        } else if(essai < nbkey) {
             reponse = Arbitre.Reponse.BIGGER.flag;
         } else {
             reponse = Arbitre.Reponse.SMALLER.flag;
@@ -111,6 +112,12 @@ public class JoueurHumain extends JoueurAvecSecret implements Joueur {
     public boolean isCheater() {
         return isCheater;
     }
+
+    @Override
+    public void setIntervalle(Intervalle intervalle) {
+
+    }
+
     public void setCheater(boolean b){
         this.isCheater = b;
     }
